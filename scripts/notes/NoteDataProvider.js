@@ -13,6 +13,8 @@ const dispatchStateChangeEvent = () => {
     eventHub.dispatchEvent(noteStateChangedEvent)
 }
 
+let notes = []
+
 const getNotes = () => {
     return fetch('http://localhost:8088/notes')
         .then(response => response.json())
@@ -22,7 +24,7 @@ const getNotes = () => {
 
 }
 
-
+//saves note and posts to the API. passing noteObj to JSON file
 export const saveNote = noteObj => {
     return fetch("http://localhost:8088/notes", {
         method: "POST",
@@ -31,7 +33,13 @@ export const saveNote = noteObj => {
         }, 
         body: JSON.stringify(noteObj)
     })
-    .then((result) => {
-        console.log("celebrate right now")
-    })
+    //updates our notes array... 
+    .then(getNotes)
+    //lets our eventHub listen to the new custom event 
+    .then(dispatchStateChangeEvent)
+}
+
+
+export const useNotes = () => {
+    return notes.slice()
 }

@@ -12,7 +12,7 @@ eventHub.addEventListener("click", clickEvent => {
         const noteCriminal = document.querySelector("#noteForm--criminal")
         
         if (noteCriminal.value !=="0"){
-        const NewNote = {
+        const newNote = {
             noteText: noteContent.value,
             date: Date.now(),
             suspect: noteCriminal.value
