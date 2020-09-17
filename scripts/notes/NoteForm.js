@@ -12,12 +12,13 @@ eventHub.addEventListener("click", clickEvent => {
         const noteCriminal = document.querySelector("#noteForm--criminal")
         
         if (noteCriminal.value !=="0"){
-        const NewNote = {
+        const newNote = {
             noteText: noteContent.value,
             date: Date.now(),
             suspect: noteCriminal.value
+            
             } 
-                saveNote(newNote)
+            saveNote(newNote)
 
         }else {
             window.alert("choose a suspect")
@@ -28,7 +29,7 @@ eventHub.addEventListener("click", clickEvent => {
 const render = (criminalArray) => {
     contentTarget.innerHTML = `
         <h3>New Note Details</h3>
-            <textarea id="noteForm--text" placeholder="put a note here :)"></textarea>
+        <textarea id="noteForm--text" placeholder="put a note here :)"></textarea>
 
             <select class ="dropdown" id="noteForm--criminal">
             <option value="0">please select criminal...</option>
