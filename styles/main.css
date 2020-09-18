@@ -1,5 +1,5 @@
 .card-criminal {
-    border: dotted;
+    flex-grow: 1;
     padding: 2em;
     justify-content: space-around;
 }
@@ -8,6 +8,26 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    flex: 3;
     margin: 2em;
+}
+
+.notHeader {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.noteFormContainer {
+    background-color: darkgoldenrod;
+    padding: 2em;
+    margin: 2em; 
+}
+
+.noteListContainer {
+    background-color: darkseagreen;
+    padding: 2em;
+    margin: 1em;
+}
+
+.filters {
+    align-items: center;
 }

@@ -15,7 +15,7 @@ eventHub.addEventListener("click", clickEvent => {
         const newNote = {
             noteText: noteContent.value,
             date: Date.now(),
-            suspect: noteCriminal.value
+            suspectId: parseInt(noteCriminal.value)
             
             } 
             saveNote(newNote)
@@ -30,16 +30,16 @@ const render = (criminalArray) => {
     contentTarget.innerHTML = `
         <h3>New Note Details</h3>
         <textarea id="noteForm--text" placeholder="put a note here :)"></textarea>
-
+        <div>
             <select class ="dropdown" id="noteForm--criminal">
             <option value="0">please select criminal...</option>
             ${
                 criminalArray.map(criminalObject => {
-                    return `<option value="${criminalObject.name}">${criminalObject.name}</option>`
+                    return `<option value="${criminalObject.id}">${criminalObject.name}</option>`
                 }).join("")
             }
             </select>
-        <button id="saveNote">Save Note</button>
+        <button id="saveNote">Save Note</button></div>
     `
 }
 

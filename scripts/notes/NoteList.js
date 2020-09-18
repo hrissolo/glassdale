@@ -2,28 +2,56 @@
 map over an array and display all notes from Note.js
 */
 
-import { getNotes, useNotes } from "./NoteProvider.js";
+import { getNotes, useNotes } from "./NoteDataProvider.js";
 import { NoteHTMLConverter } from "./Note.js";
-import { useCriminals } from "../criminals/CriminalProvider.js";
+import { getCriminals, useCriminals } from "../criminals/CriminalProvider.js";
+import {deleteNote} from "./NoteDataProvider.js"
 
-const contentTarget = document.querySelector("#noteListContainer")
-const eventHub = document.querySelector("#main")
+const contentTarget = document.querySelector(".noteListContainer")
+const eventHub = document.querySelector(".container")
 
-const render = (notes) => {
-    const criminals = useCriminals()
+const render = (notes, suspects) => {
     contentTarget.innerHTML = notes.map((noteObject) => {
+        noteObject.suspectObj = suspects.find(suspect => {
+            return suspect.id === parseInt(noteObject.suspectId)
+        })
             return NoteHTMLConverter(noteObject)
         }).join("");
 }
 
 export const NoteList = () => {
     getNotes()
-        .then(useNotes)
-        .then(render)
+        .then(getCriminals)
+        .then(() => {
+            const notes = useNotes()
+            const suspects = useCriminals()
+            render(notes, suspects)
+        })
 }
 
 
 eventHub.addEventListener("noteStateChanged", () => {	
     const newNotes = useNotes()
-    render(newNotes)
+    render(newNotes, useCriminals())
+})
+
+
+eventHub.addEventListener("click", clickEvent => {
+    if (clickEvent.target.id.startsWith("deleteNote--")) {
+        const [prefix, id] = clickEvent.target.id.split("--")
+
+        /*
+            Invoke the function that performs the delete operation.
+
+            Once the operation is complete you should THEN invoke
+            useNotes() and render the note list again.
+        */
+       deleteNote(id).then(
+           () => {
+               const updatedNotes = useNotes()
+               const criminals = useCriminals()
+               render(updatedNotes, criminals)
+           }
+       )
+    }
 })
